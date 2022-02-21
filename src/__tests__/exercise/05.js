@@ -8,7 +8,9 @@ import userEvent from '@testing-library/user-event'
 import {build, fake} from '@jackfranklin/test-data-bot'
 import {rest} from 'msw'
 import {setupServer} from 'msw/node'
+
 import Login from '../../components/login-submission'
+import {handlers} from '../../test/server-handlers'
 
 const buildLoginForm = build({
   fields: {
@@ -18,15 +20,7 @@ const buildLoginForm = build({
 })
 
 // 📜 https://mswjs.io/
-const server = setupServer(
-  rest.post(
-    'https://auth-provider.example.com/api/login',
-    async (req, res, ctx) => {
-      console.log(req)
-      return res(ctx.json({username: req.body.username}))
-    },
-  ),
-)
+const server = setupServer(...handlers)
 
 beforeAll(() => server.listen())
 afterAll(() => server.close())
