@@ -49,5 +49,7 @@ test(`add username required message if username is missing`, async () => {
 
   await waitForElementToBeRemoved(screen.getByLabelText(/loading/i))
 
-  expect(screen.getByText(/username required/i)).toBeInTheDocument()
+  expect(screen.getByRole('alert').textContent).toMatchInlineSnapshot(
+    `"username required"`,
+  )
 })
