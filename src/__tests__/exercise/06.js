@@ -50,3 +50,12 @@ test('displays the users current location', async () => {
 
   screen.debug()
 })
+
+test('error handling', async () => {
+  useCurrentPosition.mockImplementation(() => [false, true])
+  render(<Location />)
+
+  expect(screen.queryByRole(/alert/i)).toBeInTheDocument()
+
+  screen.debug()
+})
